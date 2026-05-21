@@ -9,6 +9,11 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class ProjectManagerAgent(BaseAgent):
+    TOOLS = [
+        "search_trips", "get_content_inventory", "find_approved_content",
+        "read_file", "write_file", "list_trip_structure",
+    ]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,

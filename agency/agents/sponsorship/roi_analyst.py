@@ -9,6 +9,11 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class ROIAnalystAgent(BaseAgent):
+    TOOLS = [
+        "calculate_roi", "calculate_cpm", "calculate_engagement_rate",
+        "get_deal_history", "save_report",
+    ]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,

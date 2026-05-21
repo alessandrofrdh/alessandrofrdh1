@@ -9,6 +9,12 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class RevenueManagerAgent(BaseAgent):
+    TOOLS = [
+        "calculate_monthly_revenue_breakdown", "estimate_influencer_fee",
+        "calculate_roi", "calculate_cpm",
+        "log_deal", "get_deal_history", "list_brands",
+    ]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,

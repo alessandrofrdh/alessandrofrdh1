@@ -9,6 +9,12 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class AnalyticsManagerAgent(BaseAgent):
+    TOOLS = [
+        "calculate_engagement_rate", "calculate_cpm",
+        "search_trips", "get_content_inventory",
+        "save_report", "read_file",
+    ]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,

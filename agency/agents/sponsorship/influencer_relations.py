@@ -9,6 +9,12 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class InfluencerRelationsAgent(BaseAgent):
+    TOOLS = [
+        "list_brands", "get_brand", "register_brand",
+        "get_deal_history", "log_deal",
+        "estimate_influencer_fee",
+    ]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,

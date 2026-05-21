@@ -9,6 +9,8 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class QualityControllerAgent(BaseAgent):
+    TOOLS = ["read_file", "write_file", "save_report", "list_trip_structure"]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,

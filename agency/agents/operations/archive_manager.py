@@ -11,6 +11,11 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class ArchiveManagerAgent(BaseAgent):
+    TOOLS = [
+        "list_files", "list_trip_structure", "read_file", "write_file",
+        "search_trips", "get_content_inventory", "find_approved_content",
+    ]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,

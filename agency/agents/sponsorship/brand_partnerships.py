@@ -9,6 +9,12 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class BrandPartnershipManagerAgent(BaseAgent):
+    TOOLS = [
+        "register_brand", "get_brand", "list_brands",
+        "log_deal", "get_deal_history", "update_deal_status",
+        "save_report",
+    ]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,

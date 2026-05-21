@@ -10,6 +10,12 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class FileManagerAgent(BaseAgent):
+    TOOLS = [
+        "read_file", "write_file", "list_files", "move_file",
+        "save_brief", "save_report", "list_trip_structure",
+        "search_trips", "get_content_inventory",
+    ]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,
