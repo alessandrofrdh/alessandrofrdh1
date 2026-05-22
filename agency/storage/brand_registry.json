@@ -1,0 +1,32 @@
+{
+  "brands": {
+    "Osprey": {
+      "nome": "Osprey",
+      "contatto": "marketing@osprey.com",
+      "nicchia": "outdoor/zaini",
+      "budget_range": "€1000-3000",
+      "note": "",
+      "registrato": "2026-05-21T23:52:30.503668"
+    },
+    "Sony Alpha": {
+      "nome": "Sony Alpha",
+      "contatto": "partner@sony.com",
+      "nicchia": "fotografia",
+      "budget_range": "€2000-5000",
+      "note": "",
+      "registrato": "2026-05-21T23:52:30.503925"
+    }
+  },
+  "deals": [
+    {
+      "id": "deal_0001",
+      "brand": "Osprey",
+      "creator": "Lorenzo Viaggio",
+      "tipo": "reel Instagram",
+      "fee": 1500,
+      "status": "confermato",
+      "note": "Viaggio Marocco giugno",
+      "data": "2026-05-21T23:52:30.504109"
+    }
+  ]
+}
