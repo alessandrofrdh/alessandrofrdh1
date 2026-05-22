@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from typing import Any
 
+import anthropic
+
 from .filesystem import (
     read_file, write_file, list_files, move_file,
     save_brief, save_report, list_trip_structure,
@@ -19,6 +21,7 @@ from .content_catalog import (
     search_trips, get_content_inventory, find_approved_content,
 )
 
+# Tool senza bisogno di client
 _REGISTRY: dict[str, Any] = {
     "read_file": read_file,
     "write_file": write_file,
@@ -43,13 +46,33 @@ _REGISTRY: dict[str, Any] = {
     "find_approved_content": find_approved_content,
 }
 
+# Tool che richiedono il client Anthropic
+_VISION_TOOLS = {"analyze_image", "analyze_trip_photos"}
 
-def execute_tool(name: str, tool_input: dict[str, Any]) -> str:
+
+def execute_tool(
+    name: str,
+    tool_input: dict[str, Any],
+    client: anthropic.Anthropic | None = None,
+) -> str:
+    # Vision tools — passano il client alla funzione
+    if name in _VISION_TOOLS:
+        from .vision import analyze_image, analyze_trip_photos
+        vision_registry = {
+            "analyze_image": analyze_image,
+            "analyze_trip_photos": analyze_trip_photos,
+        }
+        fn = vision_registry[name]
+        try:
+            return str(fn(**tool_input, client=client))
+        except Exception as e:
+            return f"Errore vision tool '{name}': {e}"
+
+    # Tool standard
     fn = _REGISTRY.get(name)
     if fn is None:
         return f"Errore: tool sconosciuto '{name}'"
     try:
-        result = fn(**tool_input)
-        return str(result)
+        return str(fn(**tool_input))
     except Exception as e:
         return f"Errore esecuzione tool '{name}': {e}"

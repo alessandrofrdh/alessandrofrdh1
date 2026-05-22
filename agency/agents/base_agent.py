@@ -211,7 +211,7 @@ class BaseAgent:
 
     def _execute_tool(self, tool_name: str, tool_input: dict[str, Any]) -> str:
         from ..tools.executor import execute_tool
-        return execute_tool(tool_name, tool_input)
+        return execute_tool(tool_name, tool_input, client=self.client)
 
     def reset_conversation(self) -> None:
         self._conversation_history = []

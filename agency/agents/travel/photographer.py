@@ -9,6 +9,11 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class TravelPhotographerAgent(BaseAgent):
+    TOOLS = [
+        "analyze_image", "analyze_trip_photos",
+        "list_files", "list_trip_structure", "save_brief",
+    ]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,

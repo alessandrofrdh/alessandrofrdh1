@@ -271,6 +271,53 @@ _ALL: dict[str, dict] = {
             "required": [],
         },
     },
+    # ── VISION ──────────────────────────────────────────────────────────────
+    "analyze_image": {
+        "name": "analyze_image",
+        "description": (
+            "Analizza un'immagine con Claude vision. Valuta qualità tecnica, "
+            "potenziale social, mood, palette cromatica e suggerimenti di editing."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "path": {
+                    "type": "string",
+                    "description": "Percorso del file immagine (jpg, png, webp, gif)",
+                },
+                "question": {
+                    "type": "string",
+                    "description": "Domanda specifica sull'immagine (opzionale, usa analisi default se omessa)",
+                },
+            },
+            "required": ["path"],
+        },
+    },
+    "analyze_trip_photos": {
+        "name": "analyze_trip_photos",
+        "description": (
+            "Analizza tutte le immagini in una cartella di un viaggio. "
+            "Utile per selezione foto, QC batch e briefing editoriale."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "trip_id": {
+                    "type": "string",
+                    "description": "ID del viaggio (es. 2026-06-15_marocco)",
+                },
+                "subfolder": {
+                    "type": "string",
+                    "description": "Sottocartella da analizzare (default: 01_raw/photo)",
+                },
+                "question": {
+                    "type": "string",
+                    "description": "Domanda specifica da applicare a tutte le foto (opzionale)",
+                },
+            },
+            "required": ["trip_id"],
+        },
+    },
 }
 
 
@@ -294,4 +341,7 @@ BRAND_REGISTRY_TOOLS = [
 ]
 CONTENT_CATALOG_TOOLS = [
     "search_trips", "get_content_inventory", "find_approved_content",
+]
+VISION_TOOLS = [
+    "analyze_image", "analyze_trip_photos",
 ]

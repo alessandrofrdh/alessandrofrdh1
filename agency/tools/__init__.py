@@ -5,6 +5,7 @@ from .definitions import (
     CALCULATOR_TOOLS,
     BRAND_REGISTRY_TOOLS,
     CONTENT_CATALOG_TOOLS,
+    VISION_TOOLS,
 )
 from .executor import execute_tool
 
@@ -15,4 +16,5 @@ __all__ = [
     "CALCULATOR_TOOLS",
     "BRAND_REGISTRY_TOOLS",
     "CONTENT_CATALOG_TOOLS",
+    "VISION_TOOLS",
 ]

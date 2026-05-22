@@ -9,6 +9,8 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class PhotoEditorAgent(BaseAgent):
+    TOOLS = ["analyze_image", "analyze_trip_photos", "list_files", "save_report"]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,
@@ -66,6 +68,12 @@ class PhotoEditorAgent(BaseAgent):
 
 
 class SeniorPhotoEditorAgent(BaseAgent):
+    TOOLS = [
+        "analyze_image", "analyze_trip_photos",
+        "list_files", "save_report", "save_brief",
+        "search_trips", "get_content_inventory",
+    ]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,
@@ -103,6 +111,8 @@ class SeniorPhotoEditorAgent(BaseAgent):
 
 
 class JuniorPhotoEditorAgent(BaseAgent):
+    TOOLS = ["analyze_image", "list_files"]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,
