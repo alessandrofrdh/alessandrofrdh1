@@ -318,6 +318,63 @@ _ALL: dict[str, dict] = {
             "required": ["trip_id"],
         },
     },
+
+    # ── VIDEO ────────────────────────────────────────────────────────────────
+    "analyze_video": {
+        "name": "analyze_video",
+        "description": (
+            "Analizza un video estraendo frame chiave con ffmpeg e analizzandoli con Claude vision. "
+            "Produce: metadati tecnici, analisi frame-by-frame, raccomandazioni di montaggio, "
+            "piattaforme consigliate (TikTok/Reels/YouTube) e voto /10."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "path": {
+                    "type": "string",
+                    "description": "Percorso del file video (mp4, mov, avi, mkv, webm, ecc.)",
+                },
+                "question": {
+                    "type": "string",
+                    "description": "Domanda specifica da applicare ad ogni frame (opzionale)",
+                },
+                "num_frames": {
+                    "type": "integer",
+                    "description": "Numero di frame chiave da estrarre e analizzare (default: 6, max consigliato: 10)",
+                },
+            },
+            "required": ["path"],
+        },
+    },
+    "analyze_trip_videos": {
+        "name": "analyze_trip_videos",
+        "description": (
+            "Analizza tutti i video in una cartella di un viaggio. "
+            "Utile per selezione clip, QC batch e briefing montaggio."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "trip_id": {
+                    "type": "string",
+                    "description": "ID del viaggio (es. 2026-06-15_marocco)",
+                },
+                "subfolder": {
+                    "type": "string",
+                    "description": "Sottocartella da analizzare (default: 01_raw/video)",
+                },
+                "question": {
+                    "type": "string",
+                    "description": "Domanda specifica da applicare a tutti i video (opzionale)",
+                },
+                "num_frames": {
+                    "type": "integer",
+                    "description": "Frame da estrarre per ogni video (default: 4)",
+                },
+            },
+            "required": ["trip_id"],
+        },
+    },
 }
 
 
@@ -344,4 +401,7 @@ CONTENT_CATALOG_TOOLS = [
 ]
 VISION_TOOLS = [
     "analyze_image", "analyze_trip_photos",
+]
+VIDEO_TOOLS = [
+    "analyze_video", "analyze_trip_videos",
 ]

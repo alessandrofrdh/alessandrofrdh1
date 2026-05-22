@@ -9,6 +9,8 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 
 
 class VideoEditorAgent(BaseAgent):
+    TOOLS = ["analyze_video", "analyze_trip_videos", "list_files", "save_report"]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,
@@ -64,6 +66,14 @@ class VideoEditorAgent(BaseAgent):
 
 
 class SeniorVideoEditorAgent(BaseAgent):
+    TOOLS = [
+        "analyze_video", "analyze_trip_videos",
+        "analyze_image", "analyze_trip_photos",
+        "list_files", "list_trip_structure",
+        "save_report", "save_brief",
+        "search_trips", "get_content_inventory",
+    ]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,
@@ -97,6 +107,8 @@ class SeniorVideoEditorAgent(BaseAgent):
 
 
 class JuniorVideoEditorAgent(BaseAgent):
+    TOOLS = ["analyze_video", "list_files"]
+
     def __init__(self, client: anthropic.Anthropic) -> None:
         super().__init__(
             client=client,

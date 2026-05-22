@@ -11,6 +11,7 @@ from ..base_agent import AgentRole, AgentResponse, BaseAgent
 class ContentDirectorAgent(BaseAgent):
     TOOLS = [
         "analyze_image", "analyze_trip_photos",
+        "analyze_video", "analyze_trip_videos",
         "read_file", "save_brief", "list_trip_structure",
         "search_trips", "get_content_inventory",
     ]

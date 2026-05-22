@@ -48,6 +48,7 @@ _REGISTRY: dict[str, Any] = {
 
 # Tool che richiedono il client Anthropic
 _VISION_TOOLS = {"analyze_image", "analyze_trip_photos"}
+_VIDEO_TOOLS = {"analyze_video", "analyze_trip_videos"}
 
 
 def execute_tool(
@@ -55,6 +56,19 @@ def execute_tool(
     tool_input: dict[str, Any],
     client: anthropic.Anthropic | None = None,
 ) -> str:
+    # Video tools
+    if name in _VIDEO_TOOLS:
+        from .video import analyze_video, analyze_trip_videos
+        video_registry = {
+            "analyze_video": analyze_video,
+            "analyze_trip_videos": analyze_trip_videos,
+        }
+        fn = video_registry[name]
+        try:
+            return str(fn(**tool_input, client=client))
+        except Exception as e:
+            return f"Errore video tool '{name}': {e}"
+
     # Vision tools — passano il client alla funzione
     if name in _VISION_TOOLS:
         from .vision import analyze_image, analyze_trip_photos
