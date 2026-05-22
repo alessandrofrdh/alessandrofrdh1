@@ -7,6 +7,7 @@ from .definitions import (
     CONTENT_CATALOG_TOOLS,
     VISION_TOOLS,
     VIDEO_TOOLS,
+    PERFORMANCE_TOOLS,
 )
 from .executor import execute_tool
 
@@ -19,4 +20,5 @@ __all__ = [
     "CONTENT_CATALOG_TOOLS",
     "VISION_TOOLS",
     "VIDEO_TOOLS",
+    "PERFORMANCE_TOOLS",
 ]

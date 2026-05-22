@@ -54,6 +54,9 @@ class AgentRole(str, Enum):
     AD_CAMPAIGN_MANAGER = "Ad Campaign Manager"
     ROI_ANALYST = "Analista ROI"
 
+    # Client / Owner
+    CLIENT_OWNER = "Proprietario"
+
     # Operations
     PROJECT_MANAGER = "Project Manager"
     FILE_MANAGER = "File Manager"

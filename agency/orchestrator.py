@@ -12,10 +12,12 @@ from .agents.social_media import SocialMediaDirectorAgent, SocialAnalyticsAgent
 from .agents.travel import TravelDirectorAgent
 from .agents.sponsorship import SponsorshipDirectorAgent, RevenueManagerAgent
 from .agents.operations import ProjectManagerAgent, FileManagerAgent, QualityControllerAgent
+from .agents.client import OwnerAgent
 from .workflows.travel_workflow import TravelWorkflow, TravelPlan
 from .workflows.content_pipeline import ContentPipelineWorkflow, ContentPackage
 from .workflows.sponsorship_workflow import SponsorshipWorkflow, SponsorshipDeal
 from .workflows.publishing_workflow import PublishingWorkflow, PublishingPlan
+from .workflows.owner_review_workflow import OwnerReviewWorkflow, WeeklyReviewResult
 from .storage.content_manager import ContentManager
 
 
@@ -61,6 +63,10 @@ class TravelVisionAgency:
         self.content_pipeline = ContentPipelineWorkflow(self.client)
         self.sponsorship_workflow = SponsorshipWorkflow(self.client)
         self.publishing_workflow = PublishingWorkflow(self.client)
+        self.owner_review_workflow = OwnerReviewWorkflow(self.client)
+
+        # Agente proprietario
+        self.owner = OwnerAgent(self.client)
 
         # Storage
         self.content_manager = ContentManager()
@@ -238,6 +244,23 @@ class TravelVisionAgency:
             content_volume=weekly_content_volume,
             trip_dates=trip_dates,
             destinations=destinations,
+        )
+
+    def run_owner_review(
+        self,
+        weekly_metrics_list: list[dict[str, Any]],
+        weekly_deliverables: list[str] | None = None,
+    ) -> dict[str, Any]:
+        """
+        Esegue il ciclo completo di revisione del proprietario (6 settimane).
+
+        Args:
+            weekly_metrics_list: Lista di 6 dizionari con metriche settimanali
+            weekly_deliverables: Descrizione dei contenuti consegnati per settimana
+        """
+        return self.owner_review_workflow.run_full_program(
+            weekly_metrics_list=weekly_metrics_list,
+            weekly_deliverables=weekly_deliverables,
         )
 
     def list_trips(self, creator_name: str | None = None) -> list:

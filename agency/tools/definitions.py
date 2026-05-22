@@ -375,6 +375,89 @@ _ALL: dict[str, dict] = {
             "required": ["trip_id"],
         },
     },
+    # ── PERFORMANCE TRACKER ─────────────────────────────────────────────────
+    "log_weekly_metrics": {
+        "name": "log_weekly_metrics",
+        "description": "Registra le metriche di performance di una settimana nel tracker.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "week": {"type": "integer", "description": "Numero della settimana (1-6)"},
+                "metrics": {
+                    "type": "object",
+                    "description": "Dizionario metriche: follower_ig, follower_tiktok, follower_youtube, engagement_rate, reach, impressions, conversioni",
+                },
+                "notes": {"type": "string", "description": "Note aggiuntive (opzionale)"},
+            },
+            "required": ["week", "metrics"],
+        },
+    },
+    "get_weekly_metrics": {
+        "name": "get_weekly_metrics",
+        "description": "Recupera le metriche registrate per una specifica settimana.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "week": {"type": "integer", "description": "Numero della settimana"},
+            },
+            "required": ["week"],
+        },
+    },
+    "calculate_weekly_growth": {
+        "name": "calculate_weekly_growth",
+        "description": "Calcola la crescita percentuale di ogni metrica rispetto alla settimana precedente.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "week": {"type": "integer", "description": "Settimana da analizzare (confronta con week-1)"},
+            },
+            "required": ["week"],
+        },
+    },
+    "check_growth_target": {
+        "name": "check_growth_target",
+        "description": "Verifica se la settimana ha raggiunto il target minimo su tutte le metriche. Ritorna RAGGIUNTO o NON RAGGIUNTO con dettaglio.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "week": {"type": "integer", "description": "Settimana da verificare"},
+                "target_pct": {"type": "number", "description": "Target percentuale (default: 10.0)"},
+            },
+            "required": ["week"],
+        },
+    },
+    "get_performance_history": {
+        "name": "get_performance_history",
+        "description": "Storico completo di tutte le settimane con metriche e pagamenti.",
+        "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+        },
+    },
+    "log_payment_decision": {
+        "name": "log_payment_decision",
+        "description": "Registra la decisione di pagamento del proprietario per una settimana.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "week": {"type": "integer", "description": "Numero della settimana"},
+                "approved": {"type": "boolean", "description": "True = pagamento approvato, False = rifiutato"},
+                "reason": {"type": "string", "description": "Motivazione della decisione"},
+                "amount_eur": {"type": "number", "description": "Importo in euro (0 se rifiutato)"},
+            },
+            "required": ["week", "approved", "reason"],
+        },
+    },
+    "get_unpaid_weeks": {
+        "name": "get_unpaid_weeks",
+        "description": "Elenca le settimane con pagamento rifiutato o ancora in attesa di valutazione.",
+        "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+        },
+    },
 }
 
 
@@ -404,4 +487,9 @@ VISION_TOOLS = [
 ]
 VIDEO_TOOLS = [
     "analyze_video", "analyze_trip_videos",
+]
+PERFORMANCE_TOOLS = [
+    "log_weekly_metrics", "get_weekly_metrics", "calculate_weekly_growth",
+    "check_growth_target", "get_performance_history",
+    "log_payment_decision", "get_unpaid_weeks",
 ]

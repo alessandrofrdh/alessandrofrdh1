@@ -20,6 +20,11 @@ from .brand_registry import (
 from .content_catalog import (
     search_trips, get_content_inventory, find_approved_content,
 )
+from .performance_tracker import (
+    log_weekly_metrics, get_weekly_metrics, calculate_weekly_growth,
+    check_growth_target, get_performance_history,
+    log_payment_decision, get_unpaid_weeks,
+)
 
 # Tool senza bisogno di client
 _REGISTRY: dict[str, Any] = {
@@ -44,6 +49,13 @@ _REGISTRY: dict[str, Any] = {
     "search_trips": search_trips,
     "get_content_inventory": get_content_inventory,
     "find_approved_content": find_approved_content,
+    "log_weekly_metrics": log_weekly_metrics,
+    "get_weekly_metrics": get_weekly_metrics,
+    "calculate_weekly_growth": calculate_weekly_growth,
+    "check_growth_target": check_growth_target,
+    "get_performance_history": get_performance_history,
+    "log_payment_decision": log_payment_decision,
+    "get_unpaid_weeks": get_unpaid_weeks,
 }
 
 # Tool che richiedono il client Anthropic

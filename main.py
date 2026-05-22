@@ -160,6 +160,103 @@ def demo_sponsorship(agency) -> None:
         )
 
 
+def demo_owner_review(agency) -> None:
+    """Demo: ciclo di revisione del proprietario — 6 settimane."""
+    console.print("\n[bold yellow]DEMO: Revisione Settimanale — Vittorio Ferrante (Proprietario)[/bold yellow]")
+    console.print("[dim]Il proprietario valuta le performance ogni settimana. Target: +10% su TUTTE le metriche.[/dim]\n")
+
+    # Metriche di partenza — settimana 1 come baseline
+    weekly_metrics = [
+        # Settimana 1 — baseline
+        {
+            "follower_instagram": 10000,
+            "follower_tiktok": 25000,
+            "follower_youtube": 5000,
+            "engagement_rate": 3.2,
+            "reach": 45000,
+            "impressioni": 120000,
+            "conversioni": 85,
+        },
+        # Settimana 2 — crescita insufficiente (sotto +10%)
+        {
+            "follower_instagram": 10400,
+            "follower_tiktok": 26200,
+            "follower_youtube": 5200,
+            "engagement_rate": 3.3,
+            "reach": 47000,
+            "impressioni": 124000,
+            "conversioni": 88,
+        },
+        # Settimana 3 — target raggiunto
+        {
+            "follower_instagram": 11500,
+            "follower_tiktok": 28900,
+            "follower_youtube": 5750,
+            "engagement_rate": 3.7,
+            "reach": 52000,
+            "impressioni": 138000,
+            "conversioni": 97,
+        },
+        # Settimana 4 — ottimi risultati
+        {
+            "follower_instagram": 12800,
+            "follower_tiktok": 32000,
+            "follower_youtube": 6400,
+            "engagement_rate": 4.1,
+            "reach": 58000,
+            "impressioni": 154000,
+            "conversioni": 108,
+        },
+        # Settimana 5 — crescita stagnante
+        {
+            "follower_instagram": 13100,
+            "follower_tiktok": 32800,
+            "follower_youtube": 6550,
+            "engagement_rate": 4.2,
+            "reach": 59500,
+            "impressioni": 157000,
+            "conversioni": 110,
+        },
+        # Settimana 6 — recupero finale
+        {
+            "follower_instagram": 14500,
+            "follower_tiktok": 36200,
+            "follower_youtube": 7250,
+            "engagement_rate": 4.7,
+            "reach": 66000,
+            "impressioni": 175000,
+            "conversioni": 122,
+        },
+    ]
+
+    deliverables = [
+        "5 Reel Instagram, 4 TikTok, 1 video YouTube — viaggio Marocco",
+        "6 Reel Instagram, 5 TikTok, 1 YouTube — contenuti Bali",
+        "7 Reel Instagram, 6 TikTok, 2 YouTube — Portogallo + 1 collaborazione Osprey",
+        "8 Reel Instagram, 7 TikTok, 2 YouTube — Islanda, viral TikTok 2M views",
+        "6 Reel Instagram, 5 TikTok, 1 YouTube — contenuti Giappone",
+        "9 Reel Instagram, 8 TikTok, 3 YouTube — Giappone + campagna Samsonite",
+    ]
+
+    summary = agency.run_owner_review(weekly_metrics, deliverables)
+
+    table = Table(title="Riepilogo 6 Settimane", show_header=True, header_style="bold cyan")
+    table.add_column("Settimana", justify="center")
+    table.add_column("Esito", justify="center")
+    table.add_column("Rework", justify="center")
+    table.add_column("Pagamento", justify="right")
+
+    for r in summary["risultati_settimanali"]:
+        esito = "[green]✅ Approvata[/green]" if r["approvata"] else "[red]❌ Rifiutata[/red]"
+        pag = f"[green]€{r['pagamento']:,.0f}[/green]" if r["pagamento"] > 0 else "[red]€0[/red]"
+        table.add_row(str(r["settimana"]), esito, str(r["rework_effettuati"]), pag)
+
+    console.print(table)
+    console.print(f"\n  Dovuto:     [bold]€{summary['totale_dovuto']:,.2f}[/bold]")
+    console.print(f"  Pagato:     [bold green]€{summary['totale_pagato']:,.2f}[/bold green]")
+    console.print(f"  Trattenuto: [bold red]€{summary['totale_trattenuto']:,.2f}[/bold red]")
+
+
 def show_agency_status(agency) -> None:
     """Mostra lo status dell'agenzia."""
     status = agency.get_agency_status()
@@ -186,9 +283,10 @@ def interactive_menu(agency) -> None:
         console.print("  5. Lista viaggi registrati")
         console.print("  6. Status agenzia")
         console.print("  7. Demo completa")
+        console.print("  8. Revisione proprietario (6 settimane)")
         console.print("  0. Esci")
 
-        choice = Prompt.ask("\nScelta", choices=["0", "1", "2", "3", "4", "5", "6", "7"])
+        choice = Prompt.ask("\nScelta", choices=["0", "1", "2", "3", "4", "5", "6", "7", "8"])
 
         if choice == "0":
             console.print("[dim]Arrivederci![/dim]")
@@ -215,6 +313,8 @@ def interactive_menu(agency) -> None:
             demo_trip_planning(agency)
             demo_content_production(agency)
             demo_sponsorship(agency)
+        elif choice == "8":
+            demo_owner_review(agency)
 
 
 def main() -> None:
@@ -250,9 +350,11 @@ def main() -> None:
                 budget=2000.0,
                 platforms=["Instagram", "TikTok"],
             )
+        elif cmd == "review":
+            demo_owner_review(agency)
         else:
             console.print(f"[yellow]Comando sconosciuto: {cmd}[/yellow]")
-            console.print("Uso: python main.py [demo | trip <creator> <destinazione>]")
+            console.print("Uso: python main.py [demo | trip <creator> <destinazione> | review]")
     else:
         interactive_menu(agency)
 
